@@ -17,12 +17,12 @@ class ScoreBoardServiceImpl implements ScoreBoardService {
   }
 
   @Override
-  public GameResult createNewGame(Pair<String, String> teams) {
+  public GameResult createNewGame(CompetitorsPair<String> teams) {
     return repository.save(GameResult.newGame(teams));
   }
 
   @Override
-  public GameResult updateGameScore(Integer gameId, Pair<Integer, Integer> newScore) {
+  public GameResult updateGameScore(Integer gameId, CompetitorsPair<Integer> newScore) {
     return repository.findById(gameId)
         .map(game -> game.updateScore(newScore))
         .map(repository::save)

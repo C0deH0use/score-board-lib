@@ -2,10 +2,16 @@ package pl.code.house.task.score.board;
 
 import java.util.Comparator;
 
-public class GameResultComparator implements Comparator<GameResult> {
+/**
+ * GameResult sorting algorithm
+ */
+class GameResultComparator implements Comparator<GameResult> {
 
-  public static final Comparator<GameResult> Instance = new GameResultComparator();
+  static final Comparator<GameResult> Instance = new GameResultComparator();
 
+  /**
+   * Used to compare two game results by the following: totalScore(desc) and game started date (desc)
+   */
   @Override
   public int compare(GameResult game1, GameResult game2) {
     var scoreComparator = game2.totalScore().compareTo(game1.totalScore());
@@ -15,4 +21,5 @@ public class GameResultComparator implements Comparator<GameResult> {
 
     return game2.started().compareTo(game1.started());
   }
+
 }

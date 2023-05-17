@@ -10,7 +10,7 @@ class HashMapScoreBoardRepository implements ScoreBoardRepository {
 
   private final Map<Integer, GameResult> db;
 
-  public HashMapScoreBoardRepository(Map<Integer, GameResult> dbSource) {
+  HashMapScoreBoardRepository(Map<Integer, GameResult> dbSource) {
     this.db = dbSource;
   }
 
