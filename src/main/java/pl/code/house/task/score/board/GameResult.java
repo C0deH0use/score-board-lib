@@ -1,5 +1,7 @@
 package pl.code.house.task.score.board;
 
+import static pl.code.house.task.score.board.CompetitorsPair.pairOf;
+
 import java.time.LocalDateTime;
 import java.util.stream.IntStream;
 import org.apache.commons.lang3.RandomUtils;
@@ -14,7 +16,7 @@ import org.apache.commons.lang3.RandomUtils;
  */
 public record GameResult(Integer gameId, CompetitorsPair<String> teams, CompetitorsPair<Integer> score, boolean finished, LocalDateTime started) {
 
-  private static final CompetitorsPair<Integer> INITIAL_SCORE = new CompetitorsPair<>(0, 0);
+  private static final CompetitorsPair<Integer> INITIAL_SCORE = pairOf(0, 0);
 
   /**
    * Methods used to calculate the total score sum of the game

@@ -11,4 +11,8 @@ public record CompetitorsPair<T>(T homeTeam, T awayTeam) {
   public String log() {
     return homeTeam + " : " + awayTeam;
   }
+
+  public static <T> CompetitorsPair<T> pairOf(T homeTeam, T awayTeam) {
+    return new CompetitorsPair<>(homeTeam, awayTeam);
+  }
 }

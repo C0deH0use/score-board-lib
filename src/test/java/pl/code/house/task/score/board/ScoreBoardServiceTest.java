@@ -3,6 +3,7 @@ package pl.code.house.task.score.board;
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static pl.code.house.task.score.board.CompetitorsPair.pairOf;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -21,7 +22,7 @@ class ScoreBoardServiceTest {
 
   private final String TeamOne = "Argentina";
   private final String TeamTwo = "Austria";
-  private final CompetitorsPair<Integer> Score = new CompetitorsPair<>(0, 0);
+  private final CompetitorsPair<Integer> Score = pairOf(0, 0);
   private ScoreBoardService sut;
   private ScoreBoardRepository repository;
   private Map<Integer, GameResult> dbSource;
@@ -37,10 +38,10 @@ class ScoreBoardServiceTest {
   @DisplayName("should add new game to the score board")
   void shouldAddNewGameToTheScoreBoard() {
     //given
-    GameResult expectedGame = new GameResult(1, new CompetitorsPair<>(TeamOne, TeamTwo), Score, false, now());
+    GameResult expectedGame = new GameResult(1, pairOf(TeamOne, TeamTwo), Score, false, now());
 
     //when
-    sut.createNewGame(new CompetitorsPair<>(TeamOne, TeamTwo));
+    sut.createNewGame(pairOf(TeamOne, TeamTwo));
 
     //then
     List<GameResult> gameResults = sut.findActiveGames();
@@ -56,9 +57,9 @@ class ScoreBoardServiceTest {
   void shouldUpdateExistingGameByNewScore() {
     //given
     var gameId = 100;
-    var newScore = new CompetitorsPair<>(0, 2);
-    repository.save(new GameResult(gameId, new CompetitorsPair<>(TeamOne, TeamTwo), Score, false, now(clock)));
-    GameResult expectedGame = new GameResult(gameId, new CompetitorsPair<>(TeamOne, TeamTwo), newScore, false, now(clock));
+    var newScore = pairOf(0, 2);
+    repository.save(new GameResult(gameId, pairOf(TeamOne, TeamTwo), Score, false, now(clock)));
+    GameResult expectedGame = new GameResult(gameId, pairOf(TeamOne, TeamTwo), newScore, false, now(clock));
 
     //when
     sut.updateGameScore(gameId, newScore);
@@ -74,8 +75,8 @@ class ScoreBoardServiceTest {
   void shouldUpdateExistingGameAsFinished() {
     //given
     var gameId = 100;
-    repository.save(new GameResult(gameId, new CompetitorsPair<>(TeamOne, TeamTwo), Score, false, now(clock)));
-    GameResult expectedGame = new GameResult(gameId, new CompetitorsPair<>(TeamOne, TeamTwo), Score, true, now(clock));
+    repository.save(new GameResult(gameId, pairOf(TeamOne, TeamTwo), Score, false, now(clock)));
+    GameResult expectedGame = new GameResult(gameId, pairOf(TeamOne, TeamTwo), Score, true, now(clock));
 
     //when
     sut.finishGame(gameId);
@@ -94,7 +95,7 @@ class ScoreBoardServiceTest {
   @DisplayName("should throw exception when updating game that does not exists")
   void shouldThrowExceptionWhenUpdatingGameThatDoesNotExists() {
     //when & then
-    assertThatThrownBy(() -> sut.updateGameScore(1, new CompetitorsPair<>(0, 2)))
+    assertThatThrownBy(() -> sut.updateGameScore(1, pairOf(0, 2)))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("Game with the following id 1 does not exist");
   }
@@ -113,7 +114,7 @@ class ScoreBoardServiceTest {
   void shouldThrowExceptionWhenTryingToMarkGameAsFinishedWhenOneAlreadyEnded() {
     // given
     var gameId = 100;
-    repository.save(new GameResult(gameId, new CompetitorsPair<>(TeamOne, TeamTwo), Score, true, now(clock)));
+    repository.save(new GameResult(gameId, pairOf(TeamOne, TeamTwo), Score, true, now(clock)));
 
     //when & then
     assertThatThrownBy(() -> sut.finishGame(gameId))

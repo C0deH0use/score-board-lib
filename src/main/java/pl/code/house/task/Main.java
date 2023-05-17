@@ -1,8 +1,9 @@
 package pl.code.house.task;
 
+import static pl.code.house.task.score.board.CompetitorsPair.pairOf;
+
 import java.time.Duration;
 import java.util.List;
-import pl.code.house.task.score.board.CompetitorsPair;
 import pl.code.house.task.score.board.GameResult;
 import pl.code.house.task.score.board.ScoreBoardFactory;
 
@@ -16,37 +17,37 @@ public class Main {
 
       System.out.println();
       System.out.println("First games about to be started....");
-      var gameOneId = scoreBoard.createNewGame(new CompetitorsPair("Poland", "Germany")).gameId();
-      var gameTwoId = scoreBoard.createNewGame(new CompetitorsPair("Austria", "Switzerland")).gameId();
+      var gameOneId = scoreBoard.createNewGame(pairOf("Poland", "Germany")).gameId();
+      var gameTwoId = scoreBoard.createNewGame(pairOf("Austria", "Switzerland")).gameId();
 
       Thread.sleep(Duration.ofSeconds(10));
-      scoreBoard.updateGameScore(gameOneId, new CompetitorsPair<>(1, 0));
+      scoreBoard.updateGameScore(gameOneId, pairOf(1, 0));
       loggGameResults(scoreBoard.findActiveGames());
 
       Thread.sleep(Duration.ofSeconds(10));
-      scoreBoard.updateGameScore(gameTwoId, new CompetitorsPair<>(0, 1));
+      scoreBoard.updateGameScore(gameTwoId, pairOf(0, 1));
       loggGameResults(scoreBoard.findActiveGames());
 
       System.out.println();
       System.out.println("Second round of games about to be started....");
-      var gameThreeId = scoreBoard.createNewGame(new CompetitorsPair("Slovenia", "Croatia")).gameId();
-      scoreBoard.updateGameScore(gameOneId, new CompetitorsPair<>(2, 0));
-      scoreBoard.updateGameScore(gameOneId, new CompetitorsPair<>(2, 1));
+      var gameThreeId = scoreBoard.createNewGame(pairOf("Slovenia", "Croatia")).gameId();
+      scoreBoard.updateGameScore(gameOneId, pairOf(2, 0));
+      scoreBoard.updateGameScore(gameOneId, pairOf(2, 1));
       loggGameResults(scoreBoard.findActiveGames());
       Thread.sleep(Duration.ofSeconds(10));
 
 
-      var gameFourId = scoreBoard.createNewGame(new CompetitorsPair("France", "Great Britain")).gameId();
+      var gameFourId = scoreBoard.createNewGame(pairOf("France", "Great Britain")).gameId();
       loggGameResults(scoreBoard.findActiveGames());
-      scoreBoard.updateGameScore(gameTwoId, new CompetitorsPair<>(1, 1));
+      scoreBoard.updateGameScore(gameTwoId, pairOf(1, 1));
       loggGameResults(scoreBoard.findActiveGames());
 
-      scoreBoard.updateGameScore(gameThreeId, new CompetitorsPair<>(1, 0));
-      scoreBoard.updateGameScore(gameThreeId, new CompetitorsPair<>(1, 1));
-      scoreBoard.updateGameScore(gameThreeId, new CompetitorsPair<>(2, 1));
+      scoreBoard.updateGameScore(gameThreeId, pairOf(1, 0));
+      scoreBoard.updateGameScore(gameThreeId, pairOf(1, 1));
+      scoreBoard.updateGameScore(gameThreeId, pairOf(2, 1));
       Thread.sleep(Duration.ofSeconds(10));
 
-      scoreBoard.updateGameScore(gameThreeId, new CompetitorsPair<>(3, 1));
+      scoreBoard.updateGameScore(gameThreeId, pairOf(3, 1));
 
       Thread.sleep(Duration.ofSeconds(10));
       scoreBoard.finishGame(gameOneId);

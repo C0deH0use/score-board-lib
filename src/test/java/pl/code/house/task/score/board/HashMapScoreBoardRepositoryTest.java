@@ -2,6 +2,7 @@ package pl.code.house.task.score.board;
 
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.code.house.task.score.board.CompetitorsPair.pairOf;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -18,7 +19,7 @@ class HashMapScoreBoardRepositoryTest {
 
   private final String TeamOne = "AWAY_TEAM";
   private final String TeamTwo = "Home_TEAM";
-  private final CompetitorsPair<Integer> Score = new CompetitorsPair<>(0, 0);
+  private final CompetitorsPair<Integer> Score = pairOf(0, 0);
 
   private HashMapScoreBoardRepository sut;
 
@@ -31,8 +32,8 @@ class HashMapScoreBoardRepositoryTest {
   @DisplayName("should store new game")
   void shouldStoreNewGame() {
     //given
-    GameResult game = GameResult.newGame(new CompetitorsPair<>(TeamOne, TeamTwo));
-    GameResult expectedGame = new GameResult(1, new CompetitorsPair<>(TeamOne, TeamTwo), Score, false, now());
+    GameResult game = GameResult.newGame(pairOf(TeamOne, TeamTwo));
+    GameResult expectedGame = new GameResult(1, pairOf(TeamOne, TeamTwo), Score, false, now());
 
     //when
     sut.save(game);
@@ -50,11 +51,11 @@ class HashMapScoreBoardRepositoryTest {
   @DisplayName("should update existing game with new score")
   void shouldUpdateExistingGameWithNewScore() {
     //given
-    CompetitorsPair<Integer> newScore = new CompetitorsPair<>(1, 0);
-    GameResult game = new GameResult(1, new CompetitorsPair<>(TeamOne, TeamTwo), Score, false, now(clock));
+    CompetitorsPair<Integer> newScore = pairOf(1, 0);
+    GameResult game = new GameResult(1, pairOf(TeamOne, TeamTwo), Score, false, now(clock));
     sut.save(game);
 
-    GameResult updatedGame = new GameResult(1, new CompetitorsPair<>(TeamOne, TeamTwo), newScore, false, now(clock));
+    GameResult updatedGame = new GameResult(1, pairOf(TeamOne, TeamTwo), newScore, false, now(clock));
     //when
     sut.save(updatedGame);
 
@@ -68,7 +69,7 @@ class HashMapScoreBoardRepositoryTest {
   @DisplayName("should return optional when finding game that id does not exist")
   void shouldReturnOptionalWhenFindingGameThatIdDoesNotExist() {
     // given
-    GameResult game = new GameResult(1000, new CompetitorsPair<>(TeamOne, TeamTwo), Score, false, now(clock));
+    GameResult game = new GameResult(1000, pairOf(TeamOne, TeamTwo), Score, false, now(clock));
     sut.save(game);
 
     //when
@@ -83,10 +84,10 @@ class HashMapScoreBoardRepositoryTest {
   void shouldReturnOnlyActiveGames() {
     //given
     List.of(
-            new GameResult(1, new CompetitorsPair<>(TeamOne, TeamTwo), new CompetitorsPair<>(1, 0), false, now(clock)),
-            new GameResult(2, new CompetitorsPair<>(TeamOne, TeamTwo), new CompetitorsPair<>(0, 1), false, now(clock)),
-            new GameResult(3, new CompetitorsPair<>(TeamOne, TeamTwo), new CompetitorsPair<>(0, 2), true, now(clock)),
-            new GameResult(4, new CompetitorsPair<>(TeamOne, TeamTwo), new CompetitorsPair<>(2, 0), true, now(clock))
+            new GameResult(1, pairOf(TeamOne, TeamTwo), pairOf(1, 0), false, now(clock)),
+            new GameResult(2, pairOf(TeamOne, TeamTwo), pairOf(0, 1), false, now(clock)),
+            new GameResult(3, pairOf(TeamOne, TeamTwo), pairOf(0, 2), true, now(clock)),
+            new GameResult(4, pairOf(TeamOne, TeamTwo), pairOf(2, 0), true, now(clock))
         )
         .forEach(sut::save);
 
