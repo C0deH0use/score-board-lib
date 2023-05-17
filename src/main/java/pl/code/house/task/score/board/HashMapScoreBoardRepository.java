@@ -6,11 +6,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-class HashMapScoreBoardRepository implements ScoreBoardRepository {
+/**
+ * ScoreBoard repository implementation using HashMap as the database source.
+ */
+public class HashMapScoreBoardRepository implements ScoreBoardRepository {
 
   private final Map<Integer, GameResult> db;
 
-  HashMapScoreBoardRepository(Map<Integer, GameResult> dbSource) {
+  public HashMapScoreBoardRepository(Map<Integer, GameResult> dbSource) {
     this.db = dbSource;
   }
 

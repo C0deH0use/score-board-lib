@@ -14,12 +14,27 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 19
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3
       with:
         java-version: '19'
         distribution: 'corretto'
         cache: 'gradle'
+
     - name: Build and tests
       uses: gradle/gradle-build-action@v2
       with:
         arguments: clean build
+
+    - name: Run Coverage
+      run: |
+        chmod +x gradlew
+        ./gradlew jacocoTestReport
+
+    - name: Add coverage to PR
+      id: jacoco
+      uses: madrapps/jacoco-report@v1.3
+      with:
+        paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
+        token: ${{ secrets.JACCO_REPORT_TOKEN }}
+        min-coverage-overall: 60
+        min-coverage-changed-files: 80

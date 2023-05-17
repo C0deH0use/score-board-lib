@@ -8,4 +8,7 @@ package pl.code.house.task.score.board;
  */
 public record CompetitorsPair<T>(T homeTeam, T awayTeam) {
 
+  public String log() {
+    return homeTeam + " : " + awayTeam;
+  }
 }

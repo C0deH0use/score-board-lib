@@ -34,6 +34,7 @@ public record GameResult(Integer gameId, CompetitorsPair<String> teams, Competit
    * @return Returns the GameResult object with the updated game score.
    */
   public GameResult updateScore(CompetitorsPair<Integer> newScore) {
+    System.out.println("New game score received, %s %s".formatted(teams.log(), newScore.log()));
     return new GameResult(this.gameId, this.teams, newScore, this.finished, this.started);
   }
 
@@ -42,6 +43,7 @@ public record GameResult(Integer gameId, CompetitorsPair<String> teams, Competit
    * @return Returns the game result with the latest score.
    */
   public GameResult markAsFinished() {
+    System.out.println("Game finished, %s %s".formatted(teams.log(), score.log()));
     return new GameResult(this.gameId, this.teams, this.score, true, this.started);
   }
 
@@ -52,6 +54,7 @@ public record GameResult(Integer gameId, CompetitorsPair<String> teams, Competit
    */
   public static GameResult newGame(CompetitorsPair<String> teams) {
     var gameId = RandomUtils.nextInt(0, Integer.MAX_VALUE);
+    System.out.println("New Game staring between %s".formatted(teams.log()));
     return new GameResult(gameId, teams, INITIAL_SCORE, false, LocalDateTime.now());
   }
 }

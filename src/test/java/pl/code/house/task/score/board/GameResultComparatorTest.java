@@ -19,9 +19,9 @@ class GameResultComparatorTest {
   @DisplayName("should order game results by total score")
   void shouldOrderGameResultsByTotalScore() {
     // given
-    var gameOne = new GameResult(1, "D Team", "Dd Team", Pair.of(0, 0), false, now(clock));
-    var gameTwo = new GameResult(2, "A Team", "D Team", Pair.of(1, 1), false, now(clock));
-    var gameThree = new GameResult(3, "A Team", "B Team", Pair.of(2, 1), false, now(clock));
+    var gameOne = new GameResult(1, new CompetitorsPair<>("D Team", "Dd Team"), new CompetitorsPair<>(0, 0), false, now(clock));
+    var gameTwo = new GameResult(2, new CompetitorsPair<>("A Team", "D Team"), new CompetitorsPair<>(1, 1), false, now(clock));
+    var gameThree = new GameResult(3, new CompetitorsPair<>("A Team", "B Team"), new CompetitorsPair<>(2, 1), false, now(clock));
     var list = List.of(
         gameOne,
         gameTwo,
@@ -39,10 +39,10 @@ class GameResultComparatorTest {
   @DisplayName("should sorting additionally by games started earlier when score is same")
   void shouldSortingAdditionallyByGamesStartedEarlierWhenScoreIsSame() {
     // given
-    var gameOne = new GameResult(1, "D Team", "Dd Team", Pair.of(0, 0), false, now(clock));
-    var gameTwo = new GameResult(2, "C Team", "B Team", Pair.of(3, 1), true, now(clock));
-    var gameThree = new GameResult(3, "A Team", "B Team", Pair.of(3, 0), false, now(clock).plusMinutes(10));
-    var gameFour = new GameResult(4, "A Team", "C Team", Pair.of(3, 0), false, now(clock));
+    var gameOne = new GameResult(1, new CompetitorsPair<>("D Team", "Dd Team"), new CompetitorsPair<>(0, 0), false, now(clock));
+    var gameTwo = new GameResult(2, new CompetitorsPair<>("C Team", "B Team"), new CompetitorsPair<>(3, 1), true, now(clock));
+    var gameThree = new GameResult(3, new CompetitorsPair<>("A Team", "B Team"), new CompetitorsPair<>(3, 0), false, now(clock).plusMinutes(10));
+    var gameFour = new GameResult(4,new CompetitorsPair<>( "A Team", "C Team"), new CompetitorsPair<>(3, 0), false, now(clock));
     var list = List.of(
         gameOne,
         gameTwo,
@@ -62,11 +62,11 @@ class GameResultComparatorTest {
   @DisplayName("should correctly order task example")
   void shouldCorrectlyOrderTaskExample() {
     // given
-    var gameOne = new GameResult(1, "Mexico", "Canada", Pair.of(0, 5), false, now());
-    var gameTwo = new GameResult(2, "Spain", "Brazil", Pair.of(10, 2), true, now());
-    var gameThree = new GameResult(3, "Germany", "France", Pair.of(2, 2), false, now());
-    var gameFour = new GameResult(4, "Uruguay", "Italy", Pair.of(6, 6), false, now());
-    var gameFive = new GameResult(5, "Argentina", "Australia", Pair.of(3, 1), false, now());
+    var gameOne = new GameResult(1, new CompetitorsPair<>("Mexico", "Canada"), new CompetitorsPair<>(0, 5), false, now());
+    var gameTwo = new GameResult(2, new CompetitorsPair<>("Spain", "Brazil"), new CompetitorsPair<>(10, 2), true, now());
+    var gameThree = new GameResult(3, new CompetitorsPair<>("Germany", "France"), new CompetitorsPair<>(2, 2), false, now());
+    var gameFour = new GameResult(4, new CompetitorsPair<>("Uruguay", "Italy"), new CompetitorsPair<>(6, 6), false, now());
+    var gameFive = new GameResult(5, new CompetitorsPair<>("Argentina", "Australia"), new CompetitorsPair<>(3, 1), false, now());
     var list = List.of(
         gameOne,
         gameTwo,

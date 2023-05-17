@@ -3,7 +3,7 @@ package pl.code.house.task.score.board;
 import java.util.List;
 import java.util.Optional;
 
-interface ScoreBoardRepository {
+public interface ScoreBoardRepository {
 
   GameResult save(GameResult game);
 
